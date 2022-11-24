@@ -1,2 +1,2 @@
 # EVIAH
-Ethereum Validator Installation and Update Helper
+## Etherium Validator Installation and Update Helper
