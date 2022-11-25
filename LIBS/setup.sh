@@ -115,7 +115,7 @@ Restart=on-failure
 RestartSec=3
 TimeoutSec=300
 ExecStart=/usr/bin/geth \
-  --mainnet \
+  --<networkhere> \
   --metrics \
   --pprof \
   --datadir /eth-storage \
@@ -124,6 +124,7 @@ ExecStart=/usr/bin/geth \
 [Install]
 WantedBy=multi-user.target
 EOF
+  sed -i "s/<networkhere>/$network/g" $EVIAH_SRCDIR/eth1.service
   sudo mv $EVIAH_SRCDIR/eth1.service /etc/systemd/system/eth1.service
   sudo chmod 644 /etc/systemd/system/eth1.service
   sudo systemctl daemon-reload
@@ -147,7 +148,36 @@ function exec_nethermind() {
   unzip -o nethermind*.zip -d $EVIAH_SRCDIR/nethermind
   rm nethermind*linux*.zip
   echo "setting up systemd service"
-  cat > $EVIAH_SRCDIR/eth1.service << EOF
+  if [ "$network" = "goerli" ]; then
+    cat > $EVIAH_SRCDIR/eth1.service << EOF
+[Unit]
+Description=Nethermind Execution Layer Client service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=$USER
+Restart=on-failure
+RestartSec=3
+KillSignal=SIGINT
+TimeoutStopSec=300
+WorkingDirectory=$EVIAH_SRCDIR/nethermind
+ExecStart=$EVIAH_SRCDIR/nethermind/Nethermind.Runner \
+  --baseDbPath $EVIAH_SRCDIR/.nethermind \
+  --config goerli \
+  --Metrics.Enabled true \
+  --Metrics.ExposePort 6060 \
+  --Metrics.IntervalSeconds 10000 \
+  --Sync.SnapSync true \
+  --datadir /eth-storage \
+  --JsonRpc.JwtSecretFile /secrets/jwtsecret
+
+[Install]
+WantedBy=multi-user.target
+EOF
+  else
+    cat > $EVIAH_SRCDIR/eth1.service << EOF
 [Unit]
 Description=Nethermind Execution Layer Client service
 Wants=network-online.target
@@ -173,6 +203,8 @@ ExecStart=$EVIAH_SRCDIR/nethermind/Nethermind.Runner \
 [Install]
 WantedBy=multi-user.target
 EOF
+  fi
+
   sudo mv $EVIAH_SRCDIR/eth1.service /etc/systemd/system/eth1.service
   sudo chmod 644 /etc/systemd/system/eth1.service
   sudo systemctl daemon-reload
@@ -235,7 +267,7 @@ Type=simple
 User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/.cargo/bin/lighthouse bn \
-  --network mainnet \
+  --network <networkhere> \
   --staking \
   --validator-monitor-auto \
   --metrics \
@@ -246,6 +278,11 @@ ExecStart=<HOME>/.cargo/bin/lighthouse bn \
 [Install]
 WantedBy=multi-user.target
 EOF
+  if [ "$network" = "mainnet" ]; then
+     sed -i "s/<networkhere>/mainnet/g" $EVIAH_SRCDIR/beacon-chain.service
+  else
+     sed -i "s/<networkhere>/prater/g" $EVIAH_SRCDIR/beacon-chain.service
+  fi
   sudo mv $EVIAH_SRCDIR/beacon-chain.service /etc/systemd/system/beacon-chain.service
   sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<HOME>:${HOME}:g"
   sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<USER>:${USER}:g"
@@ -266,13 +303,18 @@ Type=simple
 User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/.cargo/bin/lighthouse vc \
- --network mainnet \
+ --network <networkhere> \
  --metrics \
  --suggested-fee-recipient 0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS
 
 [Install]
 WantedBy=multi-user.target
 EOF
+  if [ "$network" = "mainnet" ]; then
+     sed -i "s/<networkhere>/mainnet/g" $EVIAH_SRCDIR/validator.service
+  else
+     sed -i "s/<networkhere>/prater/g" $EVIAH_SRCDIR/validator.service
+  fi
   sudo mv $EVIAH_SRCDIR/validator.service /etc/systemd/system/validator.service
   sudo sed -i /etc/systemd/system/validator.service -e "s:<HOME>:${HOME}:g"
   sudo sed -i /etc/systemd/system/validator.service -e "s:<USER>:${USER}:g"
@@ -311,7 +353,7 @@ Type=simple
 User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/prysm/prysm.sh beacon-chain \
-  --mainnet \
+  --<networkhere> \
   --checkpoint-sync-url=https://beaconstate.info \
   --genesis-beacon-api-url=https://beaconstate.info \
   --execution-endpoint=http://localhost:8551 \
@@ -322,6 +364,11 @@ ExecStart=<HOME>/prysm/prysm.sh beacon-chain \
 [Install]
 WantedBy=multi-user.target
 EOF
+  if [ "$network" = "mainnet" ]; then
+     sed -i "s/<networkhere>/mainnet/g" $EVIAH_SRCDIR/beacon-chain.service
+  else
+     sed -i "s/<networkhere>/prater/g" $EVIAH_SRCDIR/beacon-chain.service
+  fi
   sudo mv $EVIAH_SRCDIR/beacon-chain.service /etc/systemd/system/beacon-chain.service
   sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<HOME>:${HOME}:g"
   sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<USER>:${USER}:g"
@@ -402,11 +449,19 @@ function staking_tool {
   git clone https://github.com/ethereum/staking-deposit-cli
   cd staking-deposit-cli
   sudo ./deposit.sh install
-  ./deposit.sh new-mnemonic --chain mainnet
+  if [ "$network" = "mainnet" ]; then
+     sudo ./deposit.sh new-mnemonic --chain mainnet
+  else
+     sudo ./deposit.sh new-mnemonic --chain prater
+  fi
   echo "Please save your mnemonic phrase in a safe place"
   echo "You will need a metamask wallet for the next steps: https://metamask.io/"
   echo "Skip through this website, until youve reached the upload field. (Altough it doesnt hurt to read through it)"
-  echo "https://launchpad.ethereum.org/en/overview"
+  if [ "$network" = "mainnet" ]; then
+     echo "https://launchpad.ethereum.org/en/overview"
+  else
+     echo "https://goerli.launchpad.ethereum.org/en/overview"
+  fi
   echo "Once youve reached the upload field, press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
   echo "Now please open the local webserver at $get_ip"
