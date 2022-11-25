@@ -2,7 +2,7 @@
 ## Etherium Validator Installation and Update Helper
 ### WARNING: THIS IS VERY ALPHA SOFTWARE AND 80% ISNT IMPLEMENTED YET!
 
-##### Installation:
+#### Installation:
 Clone the repository with:
 ```
 git clone https://github.com/GameTec-live/EVIAH.git
