@@ -1,6 +1,7 @@
 # EVIAH
 ## Ethereum Validator Installation and Update Helper
 ### WARNING: THIS IS VERY ALPHA SOFTWARE AND 80% ISNT IMPLEMENTED YET!
+Testnet and Mainnet supported...
 
 #### Installation:
 Clone the repository with:
