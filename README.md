@@ -1,5 +1,5 @@
 # EVIAH
-## Etherium Validator Installation and Update Helper
+## Ethereum Validator Installation and Update Helper
 ### WARNING: THIS IS VERY ALPHA SOFTWARE AND 80% ISNT IMPLEMENTED YET!
 
 #### Installation:
