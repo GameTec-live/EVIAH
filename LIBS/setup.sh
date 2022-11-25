@@ -118,6 +118,7 @@ ExecStart=/usr/bin/geth \
   --mainnet \
   --metrics \
   --pprof \
+  --datadir /eth-storage \
   --authrpc.jwtsecret=/secrets/jwtsecret
 
 [Install]
@@ -166,6 +167,7 @@ ExecStart=$EVIAH_SRCDIR/nethermind/Nethermind.Runner \
   --Metrics.ExposePort 6060 \
   --Metrics.IntervalSeconds 10000 \
   --Sync.SnapSync true \
+  --datadir /eth-storage \
   --JsonRpc.JwtSecretFile /secrets/jwtsecret
 
 [Install]
