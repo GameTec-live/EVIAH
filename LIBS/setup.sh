@@ -698,17 +698,7 @@ EOF
   echo "fail2ban setup complete"
   echo "disableing root"
   sudo passwd -l root
-  echo "root disabled"
-  echo "setting up 2fa for ssh"
-  sudo apt install libpam-google-authenticator -y
-  sudo echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
-  sudo sed -i "s/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g" /etc/ssh/sshd_config
-  sudo sed -i "s/UsePAM no/UsePAM yes/g" /etc/ssh/sshd_config
-  sudo systemctl restart sshd.service
-  echo "${red} Starting 2fa setup${white}"
-  google-authenticator
-  echo "2fa setup complete"
-  echo "2fa setup complete" >> $EVIAH_SRCDIR/ssh.log
+  echo "root disabled".log
   echo "${green}hardening complete${white}"
 }
 
@@ -721,7 +711,6 @@ function harden_system() {
   echo "5. install unattended upgrades"
   echo "6. install a firewall"
   echo "7. install fail2ban"
-  echo "8. setup 2fa for ssh${white}"
   echo "${red}You will need to use a ssh key to login, make sure this is setup beforehand!${white}"
   read -p "${cyan}Confirm hardening? (y/n) ${white}" yn
   case $yn in
