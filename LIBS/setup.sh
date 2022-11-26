@@ -528,8 +528,8 @@ makestep 0.1 -1
 EOF
   sudo mv $EVIAH_SRCDIR/chrony.conf /etc/chrony/chrony.conf
   echo "Starting chrony"
-  sudo systemctl restart chronyd.service
-  sudo systemctl enable chronyd.service
+  sudo systemctl restart chrony.service
+  sudo systemctl enable chrony.service
   echo "Chrony installed"
 }
 
