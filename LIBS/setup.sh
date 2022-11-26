@@ -416,7 +416,7 @@ Type=simple
 User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/prysm/prysm.sh validator \
-  --mainnet \
+  --<networkhere> \
   --accept-terms-of-use \
   --wallet-password-file <HOME>/.eth2validators/validators-password.txt \
   --suggested-fee-recipient 0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS
@@ -424,6 +424,11 @@ ExecStart=<HOME>/prysm/prysm.sh validator \
 [Install]
 WantedBy=multi-user.target
 EOF
+  if [ "$network" = "mainnet" ]; then
+     sed -i "s/<networkhere>/mainnet/g" $EVIAH_SRCDIR/validator.service
+  else
+     sed -i "s/<networkhere>/prater/g" $EVIAH_SRCDIR/validator.service
+  fi
   sudo mv $EVIAH_SRCDIR/validator.service /etc/systemd/system/validator.service
   sudo sed -i /etc/systemd/system/validator.service -e "s:0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS:${eth1_address}:g"
   sudo sed -i /etc/systemd/system/validator.service -e "s:<HOME>:${EVIAH_SRCDIR}:g"
