@@ -383,7 +383,7 @@ EOF
      sed -i "s/<networkhere>/prater/g" $EVIAH_SRCDIR/beacon-chain.service
   fi
   sudo mv $EVIAH_SRCDIR/beacon-chain.service /etc/systemd/system/beacon-chain.service
-  sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<HOME>:${HOME}:g"
+  sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<HOME>:${EVIAH_SRCDIR}:g"
   sudo sed -i /etc/systemd/system/beacon-chain.service -e "s:<USER>:${USER}:g"
   echo "Please enter the eth1 address you want to receive your validator fees"
   local eth1_address
@@ -418,7 +418,7 @@ Restart=on-failure
 ExecStart=<HOME>/prysm/prysm.sh validator \
   --<networkhere> \
   --accept-terms-of-use \
-  --wallet-password-file <HOME>/.eth2validators/validators-password.txt \
+  --wallet-password-file <passfile>/.eth2validators/validators-password.txt \
   --suggested-fee-recipient 0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS
 
 [Install]
@@ -432,6 +432,7 @@ EOF
   sudo mv $EVIAH_SRCDIR/validator.service /etc/systemd/system/validator.service
   sudo sed -i /etc/systemd/system/validator.service -e "s:0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS:${eth1_address}:g"
   sudo sed -i /etc/systemd/system/validator.service -e "s:<HOME>:${EVIAH_SRCDIR}:g"
+  sudo sed -i /etc/systemd/system/validator.service -e "s:<passfile>:${HOME}:g"
   sudo sed -i /etc/systemd/system/validator.service -e "s:<USER>:${USER}:g"
   sudo chmod 644 /etc/systemd/system/validator.service
   sudo systemctl daemon-reload
