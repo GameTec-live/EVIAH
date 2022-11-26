@@ -7,11 +7,11 @@ Testnet and Mainnet supported...
 Ubuntu 22.04 LTS supported...
 #### Installation:
 Clone the repository with:
-```
+```shell
 git clone https://github.com/GameTec-live/EVIAH.git
 ```
 and then just run the script...
-```
+```shell
 EVIAH/eviah.sh
 ```
 

@@ -462,7 +462,7 @@ function staking_tool {
   git clone https://github.com/ethereum/staking-deposit-cli
   cd staking-deposit-cli
   #sudo ./deposit.sh install
-  trap "sudo ./deposit.sh uninstall" EXIT
+  trap "sudo ./deposit.sh install" EXIT
   if [ "$network" = "mainnet" ]; then
      sudo ./deposit.sh new-mnemonic --chain mainnet
   else
