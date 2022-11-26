@@ -367,6 +367,7 @@ User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/prysm/prysm.sh beacon-chain \
   --<networkhere> \
+  --datadir /eth-storage \
   --checkpoint-sync-url=https://beaconstate.info \
   --genesis-beacon-api-url=https://beaconstate.info \
   --execution-endpoint=http://localhost:8551 \
@@ -417,6 +418,7 @@ User=<USER>
 Restart=on-failure
 ExecStart=<HOME>/prysm/prysm.sh validator \
   --<networkhere> \
+  --datadir /eth-storage \
   --accept-terms-of-use \
   --wallet-password-file <passfile>/.eth2validators/validators-password.txt \
   --suggested-fee-recipient 0x_CHANGE_THIS_TO_MY_ETH_FEE_RECIPIENT_ADDRESS
