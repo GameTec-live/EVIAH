@@ -240,6 +240,7 @@ function consensus_lighthouse() {
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
   echo export PATH="$HOME/.cargo/bin:$PATH" >> ~/.bashrc
   source ~/.bashrc
+  source "$HOME/.cargo/env"
   deps=("git" "gcc" "g++" "make" "cmake" "pkg-config" "libssl-dev" "libclang-dev" "clang" "protobuf-compiler")
   dependency_check "${deps[@]}"
   cd $EVIAH_SRCDIR
