@@ -14,7 +14,7 @@ function main_ui {
   echo -e "|                    |       Staking tool: $(staketool)"
   echo -e "|  1) [Update]       |       Exec Client: $(execclient)"
   echo -e "|  2) [Remove]       |       Consensus Client: $(consensus)"
-  echo -e "|  3) [Advanced]     |"
+  echo -e "|  3) [Harden System]|"
   echo -e "|  4) [Backup]       |"
   echo -e "|                    |       Chrony $(chrony_status)"
   echo -e "|  5) [Settings]     |       Prometheus: $(promethius_status)"

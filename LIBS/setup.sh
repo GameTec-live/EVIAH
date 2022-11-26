@@ -652,6 +652,84 @@ function update() {
   echo "${green}Update complete${white}"
 }
 
+function harden_install() {
+  echo "Hardening SSH"
+  local port
+  port=( $RANDOM % 1000 + 22 )
+  sudo sed -i "s/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g" /etc/ssh/sshd_config
+  sudo sed -i "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+  sudo sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
+  sudo sed -i "s/PermitEmptyPasswords no/PermitEmptyPasswords no/g" /etc/ssh/sshd_config
+  sudo sed -i "s/Port 22/Port $port/g" /etc/ssh/sshd_config
+  sudo systemctl restart sshd.service
+  echo "SSH hardening complete"
+  echo "SSH port is now $port"
+  echo "SSH port is now: $port" >> $EVIAH_SRCDIR/ssh.log
+  sudo apt-get install unattended-upgrades
+  sudo dpkg-reconfigure -plow unattended-upgrades
+  echo "Unattended upgrades installed"
+  echo "setting up firewall"
+  sudo ufw default deny incoming
+  sudo ufw default allow outgoing
+  sudo ufw allow $port/tcp
+  sudo ufw allow 9000
+  sudo ufw allow 30303
+  sudo ufw allow 13000/tcp
+  sudo ufw allow 12000/udp
+  sudo ufw enable
+  sudo ufw status numbered
+  echo "firewall setup complete"
+  echo "setting up fail2ban"
+  sudo apt-get install fail2ban
+  cat cat > $EVIAH_SRCDIR/jail.local << EOF
+[sshd]
+enabled = true
+port = $port
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+EOF
+  sudo mv $EVIAH_SRCDIR/jail.local /etc/fail2ban/jail.local
+  sudo systemctl restart fail2ban.service
+  echo "fail2ban setup complete"
+  echo "disableing root"
+  sudo passwd -l root
+  echo "root disabled"
+  echo "setting up 2fa for ssh"
+  sudo apt install libpam-google-authenticator -y
+  echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
+  sudo sed -i "s/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g" /etc/ssh/sshd_config
+  sudo sed -i "s/UsePAM no/UsePAM yes/g" /etc/ssh/sshd_config
+  sudo systemctl restart sshd.service
+  echo "${red} Starting 2fa setup${white}"
+  google-authenticator
+  echo "2fa setup complete"
+  echo "2fa setup complete" >> $EVIAH_SRCDIR/ssh.log
+  echo "${green}hardening complete${white}"
+}
+
+function harden_system() {
+  echo "are you sure you want to harden your system? this will:"
+  echo "${yellow}1. disable ssh password login"
+  echo "2. disable root login"
+  echo "3. disable ssh root login"
+  echo "4. change the ssh port to a random number"
+  echo "5. install unattended upgrades"
+  echo "6. install a firewall"
+  echo "7. install fail2ban"
+  echo "8. setup 2fa for ssh${white}"
+  echo "${red}You will need to use a ssh key to login, make sure this is setup beforehand!${white}"
+  read -p "${cyan}Confirm hardening? (y/n) ${white}" yn
+  case $yn in
+    [yY] ) echo "Hardening";
+      harden_install;;
+    [nN] ) echo "aborting...";
+      exit;;
+    * ) echo "invalid response, aborting...";
+      exit;;
+  esac
+}
+
 function main_setup() {
   clear
   main_setup_ui
@@ -707,7 +785,7 @@ function main_menu() {
         echo "RemoveUI"
         break;;
       3) clear
-        echo "AdvancedUI"
+        harden_system
         break;;
       4)clear
         echo "BackupUI"
