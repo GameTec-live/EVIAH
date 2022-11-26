@@ -732,9 +732,12 @@ function remove_everything() {
   read -p "${cyan}Confirm Removal? (y/n) ${white}" yn
   case $yn in
     [yY] )
-      read -p "${cyan}Do you want to erase all disks afterwards?? (y/n) ${white}" yn
+      read -p "${cyan}Do you want to erase all disks afterwards? (y/n) ${white}" yn
       case $yn in
         [yY] ) echo "Starting removal...";
+          sudo systemctl stop eth1.service
+          sudo systemctl stop validator.service
+          sudo systemctl stop beacon-chain.service
           sudo zpool destroy eth-storage
           sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter"
           sudo rm -rf $EVIAH_SRCDIR
@@ -742,6 +745,9 @@ function remove_everything() {
           echo "${green}removal complete"
           exit;;
         [nN] ) echo "Starting removal...";
+          sudo systemctl stop eth1.service
+          sudo systemctl stop validator.service
+          sudo systemctl stop beacon-chain.service
           sudo zpool destroy eth-storage
           sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter"
           sudo rm -rf $EVIAH_SRCDIR
