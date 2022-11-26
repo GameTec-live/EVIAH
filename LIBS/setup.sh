@@ -640,6 +640,17 @@ function grafana_installl() {
   read -p "${cyan}####### Press enter to continue:${white} "
 }
 
+function update() {
+  echo "${green}Updating${white}"
+  git fetch --all && git checkout stable && git pull
+  sudo DEBIAN_FRONTEND=noninteractive apt-get update
+  sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
+  sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yq
+  sudo DEBIAN_FRONTEND=noninteractive apt-get autoremove -yq
+  sudo DEBIAN_FRONTEND=noninteractive apt-get autoclean -yq
+  echo "${green}Update complete${white}"
+}
+
 function main_setup() {
   clear
   main_setup_ui
@@ -666,7 +677,7 @@ function main_setup() {
         prometheus_install
         break;;
       6) clear
-        echo grafana_installl
+        grafana_installl
         break;;
       7) clear
         echo "WebUI"
@@ -689,7 +700,7 @@ function main_menu() {
         main_setup
         main_ui;;
       1)clear
-        echo "UpdateUI"
+        update
         break;;
       2) clear
         echo "RemoveUI"
