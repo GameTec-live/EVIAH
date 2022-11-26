@@ -141,8 +141,8 @@ function exec_nethermind() {
   openssl rand -hex 32 | tr -d "\n" | sudo tee /secrets/jwtsecret
   sudo chmod 644 /secrets/jwtsecret
   echo "installing nethermind"
-  sudo apt-get update
-  sudo apt-get install curl libsnappy-dev libc6-dev jq libc6 unzip -y
+  deps=("curl" "libsnappy-dev" "libc6-dev jq" "libc6" "unzip")
+  dependency_check "${deps[@]}"
   cd $EVIAH_SRCDIR
   curl -s https://api.github.com/repos/NethermindEth/nethermind/releases/latest | jq -r ".assets[] | select(.name) | .browser_download_url" | grep linux-amd64  | xargs wget -q --show-progress
   unzip -o nethermind*.zip -d $EVIAH_SRCDIR/nethermind
@@ -240,8 +240,8 @@ function consensus_lighthouse() {
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
   echo export PATH="$HOME/.cargo/bin:$PATH" >> ~/.bashrc
   source ~/.bashrc
-  sudo apt-get update
-  sudo apt install -y git gcc g++ make cmake pkg-config libssl-dev libclang-dev clang protobuf-compiler
+  deps=("git" "gcc" "g++" "make" "cmake" "pkg-config" "libssl-dev" "libclang-dev" "clang" "protobuf-compiler")
+  dependency_check "${deps[@]}"
   cd $EVIAH_SRCDIR
   git clone https://github.com/sigp/lighthouse.git
   cd lighthouse
@@ -465,7 +465,7 @@ function staking_tool {
   fi
   echo "Once youve reached the upload field, press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
-  echo "Now please open the local webserver at $get_ip"
+  echo "Now please open the local webserver at $(get_ip)"
   echo "Download the deposit_data-#########.json file and upload it to the launchpad website. You have 2 minutes to do so after pressing Enter."
   read -p "${cyan}####### Press enter to continue:${white} " action
   cd ./validator_keys
@@ -480,7 +480,8 @@ function staking_tool {
 }
 
 function chrony_install() {
-  sudo apt-get install chrony -y
+  deps=("chrony")
+  dependency_check "${deps[@]}"
   cat > $EVIAH_SRCDIR/chrony.conf << EOF
 pool time.google.com       iburst minpoll 1 maxpoll 2 maxsources 3
 pool ntp.ubuntu.com        iburst minpoll 1 maxpoll 2 maxsources 3
@@ -520,7 +521,8 @@ EOF
 function prometheus_install() {
   echo "Installing prometheus"
   cd $EVIAH_SRCDIR
-  sudo apt-get install -y prometheus prometheus-node-exporter
+  deps=("prometheus" "prometheus-node-exporter")
+  dependency_check "${deps[@]}"
   sudo systemctl enable prometheus.service prometheus-node-exporter.service
   if [ -d $EVIAH_SRCDIR/lighthouse ]; then
     cat > $EVIAH_SRCDIR/prometheus.yml << EOF
@@ -601,7 +603,8 @@ function grafana_installl() {
   wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
   echo "deb https://packages.grafana.com/oss/deb stable main" > grafana.list
   sudo mv grafana.list /etc/apt/sources.list.d/grafana.list
-  sudo apt-get update && sudo apt-get install -y grafana
+  deps=("grafana")
+  dependency_check "${deps[@]}"
   sudo systemctl enable grafana-server.service
   sudo systemctl start grafana-server.service
   echo "Grafana installed"
