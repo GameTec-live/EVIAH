@@ -32,7 +32,7 @@ function main_setup_ui {
   echo -e "/=======================================================\\"
   echo -e "|       ~~~~~~~~~~~~~~~ [ Setup ] ~~~~~~~~~~~~~~~       |"
   echo -e "|-------------------------------------------------------/"
-  echo -e "|  0) [ZFS]          |"
+  echo -e "|  0) [ZFS]          |       ZFS: $(zfs_status)"
   echo -e "|                    |"
   echo -e "|  1) [Staking Tool] |       Staking tool: $(staketool)"
   echo -e "|  2) [Exec CLient]  |       Exec Client: $(execclient)"
