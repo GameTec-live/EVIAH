@@ -666,8 +666,9 @@ function harden_install() {
   echo "SSH hardening complete"
   echo "SSH port is now $port"
   echo "SSH port is now: $port" >> $EVIAH_SRCDIR/ssh.log
-  sudo apt-get install unattended-upgrades
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install unattended-upgrades -yq
   sudo dpkg-reconfigure -plow unattended-upgrades
+  clear
   echo "Unattended upgrades installed"
   echo "setting up firewall"
   sudo ufw default deny incoming
@@ -683,8 +684,8 @@ function harden_install() {
   sudo ufw status numbered
   echo "firewall setup complete"
   echo "setting up fail2ban"
-  sudo apt-get install fail2ban
-  cat cat > $EVIAH_SRCDIR/jail.local << EOF
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install fail2ban -yq
+  cat > $EVIAH_SRCDIR/jail.local << EOF
 [sshd]
 enabled = true
 port = $port
