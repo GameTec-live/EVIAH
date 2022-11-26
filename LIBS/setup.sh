@@ -476,7 +476,7 @@ function staking_tool {
   else
      echo "https://goerli.launchpad.ethereum.org/en/overview"
   fi
-  sudo chmod 777 EVIAH/staking-deposit-cli/validator_keys -R
+  sudo chmod 777 $EVIAH_SRCDIR/staking-deposit-cli/validator_keys -R
   echo "Once youve reached the upload field, press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
   echo "Now please open the local webserver at $(get_ip)"
