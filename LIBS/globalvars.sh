@@ -110,8 +110,8 @@ function get_ip() {
 
 function Eviah_version() {
   local version
-  cd "${KIAUH_SRCDIR}"
-  #version="$(git describe HEAD --always --tags | cut -d "-" -f 1,2)"
-  version="0.0"
+  cd "${EVIAH_SRCDIR}"
+  version="$(git describe HEAD --always --tags | cut -d "-" -f 1,2)"
+  #version="0.0"
   echo -e "${yellow}Eviah Version: ${white}${version}"
 }

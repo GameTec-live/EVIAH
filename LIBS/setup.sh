@@ -642,6 +642,7 @@ function grafana_installl() {
 
 function update() {
   echo "${green}Updating${white}"
+  cd $EVIAH_SRCDIR
   git fetch --all && git checkout stable && git pull
   sudo DEBIAN_FRONTEND=noninteractive apt-get update
   sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
