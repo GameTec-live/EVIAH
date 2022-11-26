@@ -723,6 +723,40 @@ function harden_system() {
   esac
 }
 
+function nuke_all_disks() {
+  sudo dd if=/dev/zero of=/dev/sd* bs=1M
+}
+
+function remove_everything() {
+  echo "${red}This will remove all EVIAH managed tools and this can not be undone!${white}"
+  read -p "${cyan}Confirm Removal? (y/n) ${white}" yn
+  case $yn in
+    [yY] )
+      read -p "${cyan}Do you want to erase all disks afterwards?? (y/n) ${white}" yn
+      case $yn in
+        [yY] ) echo "Starting removal...";
+          sudo apt remove -yq "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
+          sudo zpool destroy eth-storage
+          sudo rm -rf $EVIAH_SRCDIR
+          nuke_all_disks
+          echo "${green}removal complete"
+          exit;;
+        [nN] ) echo "Starting removal...";
+          sudo apt remove -yq "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
+          sudo zpool destroy eth-storage
+          sudo rm -rf $EVIAH_SRCDIR
+          echo "${green}removal complete"
+          exit;;
+        * ) echo "invalid response, aborting...";
+          exit;;
+      esac;;
+    [nN] ) echo "aborting...";
+      exit;;
+    * ) echo "invalid response, aborting...";
+      exit;;
+  esac
+}
+
 function main_setup() {
   clear
   main_setup_ui
@@ -775,7 +809,7 @@ function main_menu() {
         update
         break;;
       2) clear
-        echo "RemoveUI"
+        remove_everything
         break;;
       3) clear
         harden_system
