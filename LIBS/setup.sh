@@ -593,12 +593,12 @@ EOF
   fi
   if [ -d $EVIAH_SRCDIR/nethermind ]; then
     echo "
-       - job_name: 'nethermind'
+    - job_name: 'nethermind'
      static_configs:
        - targets: ['localhost:6060']" >> $EVIAH_SRCDIR/prometheus.yml
   else
     echo "
-       - job_name: 'geth'
+    - job_name: 'geth'
      scrape_interval: 15s
      scrape_timeout: 10s
      metrics_path: /debug/metrics/prometheus
