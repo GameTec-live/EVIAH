@@ -471,7 +471,7 @@ function staking_tool {
   sudo python3 -m http.server 80
   ServerPID=$!
   ( sleep 300; kill $ServerPID ) &
-  read -p "${cyan}####### Or press enter to continue:${white} "; kill $ServerPID
+  ( read -p "${cyan}####### Or press enter to continue:${white} "; kill $ServerPID ) &
   fg $ServerPID
   cd ..
   echo "After uploading, connect your metamask wallet to the launchpad website and press enter to continue"
