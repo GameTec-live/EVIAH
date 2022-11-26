@@ -625,7 +625,7 @@ function grafana_installl() {
   echo "Grafana installed"
   echo "now go and setup grafana to your likeing, the password is admin with the user admin"
   echo "the prometheus url is http://localhost:9090 (needs to be added as a datasource in the settings)"
-  echo "the grafana url is http://$get_ip:3000"
+  echo "the grafana url is http://${get_ip}:3000"
   echo "you may also download the below dashboards and import them to get started"
   if [ -d $EVIAH_SRCDIR/lighthouse ]; then
     echo "https://raw.githubusercontent.com/Yoldark34/lighthouse-staking-dashboard/main/Yoldark_ETH_staking_dashboard.json"
