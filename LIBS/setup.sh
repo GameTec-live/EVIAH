@@ -735,14 +735,14 @@ function remove_everything() {
       read -p "${cyan}Do you want to erase all disks afterwards?? (y/n) ${white}" yn
       case $yn in
         [yY] ) echo "Starting removal...";
-          sudo apt-get remove -yq "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
+          sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
           sudo zpool destroy eth-storage
           sudo rm -rf $EVIAH_SRCDIR
           nuke_all_disks
           echo "${green}removal complete"
           exit;;
         [nN] ) echo "Starting removal...";
-          sudo apt-get remove -yq "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
+          sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus node_exporter"
           sudo zpool destroy eth-storage
           sudo rm -rf $EVIAH_SRCDIR
           echo "${green}removal complete"
