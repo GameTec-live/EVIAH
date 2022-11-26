@@ -251,8 +251,13 @@ function consensus_lighthouse() {
   echo "Verifying lighthouse installation"
   lighthouse --version
   echo "importing keys"
-  lighthouse account validator import --network mainnet --directory=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
-  lighthouse account_manager validator list --network mainnet
+  if [ "$network" = "mainnet" ]; then
+    lighthouse account validator import --network mainnet --directory=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
+    lighthouse account_manager validator list --network mainnet
+  else
+    lighthouse account validator import --network prater --directory=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
+    lighthouse account_manager validator list --network prater
+  fi
   echo "you may now forward ports 9000 tcp/udp and port 30303 tcp/udp and then press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
   echo "setting up systemd service"
@@ -339,9 +344,15 @@ function consensus_prysm(){
   echo "You may now forward ports 12000 udp, port 13000 tcp and port 30303 tcp/udp and then press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
   echo "importing keys"
-  $EVIAH_SRCDIR/prysm/prysm.sh validator accounts import --mainnet --keys-dir=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
-  echo "verifying import"
-  $EVIAH_SRCDIR/prysm/prysm.sh validator accounts list --mainnet
+  if [ "$network" = "mainnet" ]; then
+    $EVIAH_SRCDIR/prysm/prysm.sh validator accounts import --mainnet --keys-dir=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
+    echo "verifying import"
+    $EVIAH_SRCDIR/prysm/prysm.sh validator accounts list --mainnet
+  else
+    $EVIAH_SRCDIR/prysm/prysm.sh validator accounts import --prater --keys-dir=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
+    echo "verifying import"
+    $EVIAH_SRCDIR/prysm/prysm.sh validator accounts list --prater
+  fi
   echo "setting up systemd service"
   cat > $EVIAH_SRCDIR/beacon-chain.service << EOF
 [Unit]
@@ -464,6 +475,7 @@ function staking_tool {
   else
      echo "https://goerli.launchpad.ethereum.org/en/overview"
   fi
+  sudo chmod 777 EVIAH/staking-deposit-cli/validator_keys -R
   echo "Once youve reached the upload field, press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
   echo "Now please open the local webserver at $(get_ip)"
