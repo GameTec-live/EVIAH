@@ -71,7 +71,7 @@ function consensus() {
 }
 
 function grafana_status() {
-  if [ -f /etc/systemd/system/grafana-server.service ]; then
+  if [ -f /etc/grafana/grafana.ini ]; then
     echo -e "${green}Installed${white}"
   else
     echo -e "${red}Not Installed${white}"

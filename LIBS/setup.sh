@@ -643,7 +643,7 @@ function grafana_installl() {
 function update() {
   echo "${green}Updating${white}"
   cd $EVIAH_SRCDIR
-  git fetch --all && git checkout stable && git pull
+  git fetch --all && git pull
   sudo DEBIAN_FRONTEND=noninteractive apt-get update
   sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
   sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yq
@@ -676,6 +676,8 @@ function harden_install() {
   sudo ufw allow 30303
   sudo ufw allow 13000/tcp
   sudo ufw allow 12000/udp
+  sudo ufw allow 3000
+  sudo ufw allow 9090
   sudo ufw enable
   sudo ufw status numbered
   echo "firewall setup complete"
