@@ -141,7 +141,7 @@ function exec_nethermind() {
   openssl rand -hex 32 | tr -d "\n" | sudo tee /secrets/jwtsecret
   sudo chmod 644 /secrets/jwtsecret
   echo "installing nethermind"
-  deps=("curl" "libsnappy-dev" "libc6-dev jq" "libc6" "unzip")
+  deps=("curl" "libsnappy-dev" "libc6-dev" "libc6" "unzip")
   dependency_check "${deps[@]}"
   cd $EVIAH_SRCDIR
   curl -s https://api.github.com/repos/NethermindEth/nethermind/releases/latest | jq -r ".assets[] | select(.name) | .browser_download_url" | grep linux-amd64  | xargs wget -q --show-progress
