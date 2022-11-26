@@ -468,7 +468,11 @@ function staking_tool {
   echo "Now please open the local webserver at $get_ip"
   echo "Download the deposit_data-#########.json file and upload it to the launchpad website. You have 5 minutes to do so."
   cd ./validator_keys
-  timeout 300s "sudo python3 -m http.server 80"
+  sudo python3 -m http.server 80
+  ServerPID=$!
+  ( sleep 300; kill $ServerPID ) &
+  read -p "${cyan}####### Or press enter to continue:${white} "; kill $ServerPID
+  fg $ServerPID
   cd ..
   echo "After uploading, connect your metamask wallet to the launchpad website and press enter to continue"
   read -p "${cyan}####### Press enter to continue:${white} " action
