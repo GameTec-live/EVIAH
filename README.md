@@ -4,7 +4,7 @@
 Thanks to [u/monochromebow](https://www.reddit.com/user/monochromebow) for the logo.
 ### WARNING: THIS IS VERY ALPHA SOFTWARE AND 80% ISNT IMPLEMENTED YET!
 Testnet and Mainnet supported...
-
+Ubuntu 22.04 LTS supported...
 #### Installation:
 Clone the repository with:
 ```
