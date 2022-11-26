@@ -237,7 +237,7 @@ function exec_install_menu() {
 
 function consensus_lighthouse() {
   echo "installing lighthouse"
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -- -y
   echo export PATH="$HOME/.cargo/bin:$PATH" >> ~/.bashrc
   source ~/.bashrc
   deps=("git" "gcc" "g++" "make" "cmake" "pkg-config" "libssl-dev" "libclang-dev" "clang" "protobuf-compiler")
