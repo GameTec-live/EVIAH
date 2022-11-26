@@ -251,6 +251,7 @@ function consensus_lighthouse() {
   echo "Verifying lighthouse installation"
   lighthouse --version
   echo "importing keys"
+  echo "${yellow}Please enter the password used for the validator keys or it wont work!${white}"
   if [ "$network" = "mainnet" ]; then
     lighthouse account validator import --network mainnet --directory=$EVIAH_SRCDIR/staking-deposit-cli/validator_keys
     lighthouse account_manager validator list --network mainnet
@@ -526,6 +527,7 @@ rtcsync
 makestep 0.1 -1
 EOF
   sudo mv $EVIAH_SRCDIR/chrony.conf /etc/chrony/chrony.conf
+  echo "Starting chrony"
   sudo systemctl restart chronyd.service
   sudo systemctl enable chronyd.service
   echo "Chrony installed"

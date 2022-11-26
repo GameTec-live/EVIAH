@@ -27,7 +27,7 @@ function dependency_check() {
     done
     echo
 
-    if sudo apt-get update --allow-releaseinfo-change && sudo apt-get install "${packages[@]}" -y; then
+    if sudo apt-get update --allow-releaseinfo-change && sudo DEBIAN_FRONTEND=noninteractive apt-get install "${packages[@]}" -yq; then
       echo "${green}Dependencies installed! ${white}"
     else
       echo "${red}Installing dependencies failed! ${white}"
