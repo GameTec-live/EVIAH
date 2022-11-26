@@ -701,7 +701,7 @@ EOF
   echo "root disabled"
   echo "setting up 2fa for ssh"
   sudo apt install libpam-google-authenticator -y
-  echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
+  sudo echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
   sudo sed -i "s/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g" /etc/ssh/sshd_config
   sudo sed -i "s/UsePAM no/UsePAM yes/g" /etc/ssh/sshd_config
   sudo systemctl restart sshd.service
