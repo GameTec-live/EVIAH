@@ -773,7 +773,7 @@ function pip_deps() {
   echo "${green}Installing python dependencies${white}"
   mkdir -p $EVIAH_SRCDIR/tmp
   cd $EVIAH_SRCDIR/tmp
-  wget https://github.com/ethereum/staking-deposit-cli/blob/master/requirements.txt
+  wget https://raw.githubusercontent.com/ethereum/staking-deposit-cli/master/requirements.txt
   sudo pip3 install -r $EVIAH_SRCDIR/tmp/requirements.txt
   cd $EVIAH_SRCDIR
   rm -rf $EVIAH_SRCDIR/tmp
