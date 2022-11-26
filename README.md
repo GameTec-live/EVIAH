@@ -14,7 +14,7 @@ and then just run the script...
 ```shell
 EVIAH/eviah.sh
 ```
-
+NOTE: When Prysm fails, use Lighthouse instead, Prysm Support is WIP
 
 Thanks to th33xitus for letting me "borrow" some of his code ;)
 
