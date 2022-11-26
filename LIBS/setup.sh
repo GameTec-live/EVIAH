@@ -738,8 +738,11 @@ function remove_everything() {
           sudo systemctl stop eth1.service
           sudo systemctl stop validator.service
           sudo systemctl stop beacon-chain.service
+          sudo systemctl disable eth1.service
+          sudo systemctl disable validator.service
+          sudo systemctl disable beacon-chain.service
           sudo zpool destroy eth-storage
-          sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter"
+          sudo apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
           sudo rm -rf $EVIAH_SRCDIR
           nuke_all_disks
           echo "${green}removal complete"
@@ -748,8 +751,11 @@ function remove_everything() {
           sudo systemctl stop eth1.service
           sudo systemctl stop validator.service
           sudo systemctl stop beacon-chain.service
+          sudo systemctl disable eth1.service
+          sudo systemctl disable validator.service
+          sudo systemctl disable beacon-chain.service
           sudo zpool destroy eth-storage
-          sudo apt-get remove -y "python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter"
+          sudo apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
           sudo rm -rf $EVIAH_SRCDIR
           echo "${green}removal complete"
           exit;;
