@@ -461,8 +461,8 @@ function staking_tool {
   cd $EVIAH_SRCDIR
   git clone https://github.com/ethereum/staking-deposit-cli
   cd staking-deposit-cli
-  #sudo ./deposit.sh install
-  trap "sudo ./deposit.sh install" EXIT
+  sudo ./deposit.sh install
+  #trap "sudo ./deposit.sh install" EXIT
   if [ "$network" = "mainnet" ]; then
      sudo ./deposit.sh new-mnemonic --chain mainnet
   else
@@ -767,6 +767,17 @@ function remove_everything() {
     * ) echo "invalid response, aborting...";
       exit;;
   esac
+}
+
+function pip_deps() {
+  echo "${green}Installing python dependencies${white}"
+  mkdir -p $EVIAH_SRCDIR/tmp
+  cd $EVIAH_SRCDIR/tmp
+  wget https://github.com/ethereum/staking-deposit-cli/blob/master/requirements.txt
+  sudo pip3 install -r $EVIAH_SRCDIR/requirements.txt
+  cd $EVIAH_SRCDIR
+  rm -rf $EVIAH_SRCDIR/tmp
+  echo "${green}Python dependencies installed${white}"
 }
 
 function main_setup() {

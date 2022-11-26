@@ -8,6 +8,9 @@ set_globals
 
 deps=("git" "curl" "wget" "python3" "python3-pip" "python3-venv" "zfsutils-linux")
 dependency_check "${deps[@]}"
+pip_deps
+clear
+echo "${green}Dependencies installed! ${white}"
 echo "its recommended to use the goerli testnet for testing purposes"
   read -p "${cyan}Use testnet? (y/n) " yn
   case $yn in
