@@ -237,9 +237,9 @@ function exec_install_menu() {
 
 function consensus_lighthouse() {
   echo "installing lighthouse"
-  #curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
-  #echo export PATH="$HOME/.cargo/bin:$PATH" >> ~/.bashrc
-  #source ~/.bashrc
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+  echo export PATH="$HOME/.cargo/bin:$PATH" >> ~/.bashrc
+  source ~/.bashrc
   deps=("rustup" "cargo" "git" "gcc" "g++" "make" "cmake" "pkg-config" "libssl-dev" "libclang-dev" "clang" "protobuf-compiler")
   dependency_check "${deps[@]}"
   cd $EVIAH_SRCDIR

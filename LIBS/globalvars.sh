@@ -28,13 +28,13 @@ function dependency_check() {
     echo
 
     if sudo apt-get update --allow-releaseinfo-change && sudo apt-get install "${packages[@]}" -y; then
-      echo "${green}Dependencies installed!"
+      echo "${green}Dependencies installed! ${white}"
     else
-      echo "${red}Installing dependencies failed!"
+      echo "${red}Installing dependencies failed! ${white}"
       return 1
     fi
   else
-    echo "${green}Dependencies already met!"
+    echo "${green}Dependencies already met! ${white}"
     return
   fi
 }
@@ -112,6 +112,6 @@ function Eviah_version() {
   local version
   cd "${KIAUH_SRCDIR}"
   #version="$(git describe HEAD --always --tags | cut -d "-" -f 1,2)"
-  version="0.0.0"
+  version="0.0"
   echo -e "${yellow}Eviah Version: ${white}${version}"
 }
