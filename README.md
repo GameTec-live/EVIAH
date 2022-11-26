@@ -14,11 +14,6 @@ and then just run the script...
 ```
 EVIAH/eviah.sh
 ```
-OR
-use the oneliner...
-```
-dig +short -t txt eviah.gametec.org | tr -d '"' | /bin/bash
-```
 
 
 Thanks to th33xitus for letting me "borrow" some of his code ;)
