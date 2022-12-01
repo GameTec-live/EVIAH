@@ -2,7 +2,8 @@
 ## Ethereum Validator Installation and Update Helper
 ![image info](./logo.png)
 Thanks to [u/monochromebow](https://www.reddit.com/user/monochromebow) for the logo.
-### WARNING: THIS IS VERY ALPHA SOFTWARE AND 80% ISNT IMPLEMENTED YET!
+### WARNING: THIS IS ALPHA SOFTWARE!
+### Sadly the tool used to manage the wallet via the CLI has a bug which causes it to crash. Check the [issue](https://github.com/ethereum/staking-deposit-cli/issues/304) for more information.
 Testnet and Mainnet supported...
 Ubuntu 22.04 LTS supported...
 #### Installation:
