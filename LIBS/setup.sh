@@ -777,6 +777,28 @@ function remove_everything() {
   esac
 }
 
+function backup() {
+  local drives
+  lsblk
+  read -p "${cyan}####### Enter the USB to backup to (eg: sdb):${white} " drives
+  drives="$drives /dev/$drive"
+  read -p "Confirm destructive action on drive $drives? (y/n) " yn
+  case $yn in
+    [yY] ) echo "Formatting drive and copying data";
+      sudo parted -a optimal $drives mkpart primary 0% 4096MB
+      mkdir $EVIAH_SRCDIR/backup
+      sudo mount $drives $EVIAH_SRCDIR/backup
+      sudo cp -r $EVIAH_SRCDIR/staking-deposit-cli/validator_keys $EVIAH_SRCDIR/backup/keys
+      sudo cp -r /secrets/jwtsecret $EVIAH_SRCDIR/backup/secrets
+      sudo umount $EVIAH_SRCDIR/backup
+      echo "backup complete, you may now unplug the USB";;
+    [nN] ) echo "aborting...";
+      exit;;
+    * ) echo "invalid response, aborting...";
+      exit;;
+  esac
+}
+
 function pip_deps() {
   echo "${green}Installing python dependencies${white}"
   mkdir -p $EVIAH_SRCDIR/tmp
@@ -846,7 +868,7 @@ function main_menu() {
         harden_system
         break;;
       4)clear
-        echo "BackupUI"
+        backup
         break;;
       5)clear
         echo "SettingsUI"
