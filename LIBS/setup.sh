@@ -471,10 +471,11 @@ function staking_tool {
   cd staking-deposit-cli
   sed -i "s/exit 1/exit 0/g" $EVIAH_SRCDIR/staking-deposit-cli/deposit.sh
   sudo ./deposit.sh install $?
+  clear
   if [ "$network" = "mainnet" ]; then
-     sudo ./deposit.sh new-mnemonic --chain mainnet
+     sudo ./deposit.sh new-mnemonic --chain mainnet --num_validators=1 --mnemonic_language=english
   else
-     sudo ./deposit.sh new-mnemonic --chain prater
+     sudo ./deposit.sh new-mnemonic --chain prater --num_validators=1 --mnemonic_language=english
   fi
   echo "Please save your mnemonic phrase in a safe place"
   echo "You will need a metamask wallet for the next steps: https://metamask.io/"
