@@ -469,7 +469,7 @@ function staking_tool {
   cd $EVIAH_SRCDIR
   git clone https://github.com/ethereum/staking-deposit-cli
   cd staking-deposit-cli
-  sed -i sed -i "s/exit 1/exit 0/g" $EVIAH_SRCDIR/eth1.service $EVIAH_SRCDIR/staking-deposit-cli/deposit.sh
+  sed -i sed -i "s/exit 1/exit 0/" $EVIAH_SRCDIR/eth1.service $EVIAH_SRCDIR/staking-deposit-cli/deposit.sh
   sudo ./deposit.sh install $?
   if [ "$network" = "mainnet" ]; then
      sudo ./deposit.sh new-mnemonic --chain mainnet
