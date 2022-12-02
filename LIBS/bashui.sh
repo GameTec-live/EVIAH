@@ -4,7 +4,7 @@ set -e
 
 function main_ui {
   echo -e "${yellow}/=======================================================\\"
-  echo -e "|  ${white} Etherium Validator Installation and Update Helper ${yellow}  |"
+  echo -e "|  ${white} Ethereum Validator Installation and Update Helper ${yellow}  |"
   echo -e "\=======================================================/${white}"
   echo -e "/=======================================================\\"
   echo -e "|     ~~~~~~~~~~~~~~~ [ Main Menu ] ~~~~~~~~~~~~~~~     |"
@@ -27,7 +27,7 @@ function main_ui {
 
 function main_setup_ui {
   echo -e "${yellow}/=======================================================\\"
-  echo -e "|  ${white} Etherium Validator Installation and Update Helper ${yellow}  |"
+  echo -e "|  ${white} Ethereum Validator Installation and Update Helper ${yellow}  |"
   echo -e "\=======================================================/${white}"
   echo -e "/=======================================================\\"
   echo -e "|       ~~~~~~~~~~~~~~~ [ Setup ] ~~~~~~~~~~~~~~~       |"
@@ -50,7 +50,7 @@ function main_setup_ui {
 
 function zfs_install_ui {
   echo -e "${yellow}/=======================================================\\"
-  echo -e "|  ${white} Etherium Validator Installation and Update Helper ${yellow}  |"
+  echo -e "|  ${white} Ethereum Validator Installation and Update Helper ${yellow}  |"
   echo -e "\=======================================================/${white}"
   echo -e "/=======================================================\\"
   echo -e "|     ~~~~~~~~~~~~~~~ [ ZFS Setup ] ~~~~~~~~~~~~~~~     |"
@@ -65,7 +65,7 @@ function zfs_install_ui {
 
 function exec_install_ui {
   echo -e "${yellow}/=======================================================\\"
-  echo -e "|  ${white} Etherium Validator Installation and Update Helper ${yellow}  |"
+  echo -e "|  ${white} Ethereum Validator Installation and Update Helper ${yellow}  |"
   echo -e "\=======================================================/${white}"
   echo -e "/=======================================================\\"
   echo -e "|  ~~~~~~~~~~~~~~~ [ Execution Setup ] ~~~~~~~~~~~~~~~  |"
@@ -79,7 +79,7 @@ function exec_install_ui {
 
 function consensus_install_ui {
   echo -e "${yellow}/=======================================================\\"
-  echo -e "|  ${white} Etherium Validator Installation and Update Helper ${yellow}  |"
+  echo -e "|  ${white} Ethereum Validator Installation and Update Helper ${yellow}  |"
   echo -e "\=======================================================/${white}"
   echo -e "/=======================================================\\"
   echo -e "|  ~~~~~~~~~~~~~~~ [ Consensus Setup ] ~~~~~~~~~~~~~~~  |"
