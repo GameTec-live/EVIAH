@@ -798,17 +798,6 @@ function backup() {
   esac
 }
 
-function pip_deps() {
-  echo "${green}Installing python dependencies${white}"
-  mkdir -p $EVIAH_SRCDIR/tmp
-  cd $EVIAH_SRCDIR/tmp
-  wget https://raw.githubusercontent.com/ethereum/staking-deposit-cli/master/requirements.txt
-  sudo pip3 install -r $EVIAH_SRCDIR/tmp/requirements.txt
-  cd $EVIAH_SRCDIR
-  rm -rf $EVIAH_SRCDIR/tmp
-  echo "${green}Python dependencies installed${white}"
-}
-
 function main_setup() {
   clear
   main_setup_ui
