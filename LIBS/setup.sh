@@ -100,7 +100,7 @@ function exec_geth() {
   echo "installing geth"
   sudo add-apt-repository -y ppa:ethereum/ethereum
   sudo apt-get update -y
-  sudo apt-get install ethereum -y
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install ethereum -y
   echo "setting up systemd service"
 cat > $EVIAH_SRCDIR/eth1.service << EOF
 [Unit]
@@ -751,7 +751,7 @@ function remove_everything() {
           sudo systemctl disable validator.service
           sudo systemctl disable beacon-chain.service
           sudo zpool destroy eth-storage
-          sudo apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
+          sudo DEBIAN_FRONTEND=noninteractive apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
           sudo rm -rf $EVIAH_SRCDIR
           nuke_all_disks
           echo "${green}removal complete"
@@ -764,7 +764,7 @@ function remove_everything() {
           sudo systemctl disable validator.service
           sudo systemctl disable beacon-chain.service
           sudo zpool destroy eth-storage
-          sudo apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
+          sudo DEBIAN_FRONTEND=noninteractive apt-get remove -y python3 python3-pip python3-venv zfsutils-linux grafana prometheus prometheus-node-exporter
           sudo rm -rf $EVIAH_SRCDIR
           echo "${green}removal complete"
           exit;;
