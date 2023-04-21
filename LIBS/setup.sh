@@ -472,10 +472,13 @@ function staking_tool {
   sed -i "s/exit 1/exit 0/g" $EVIAH_SRCDIR/staking-deposit-cli/deposit.sh
   sudo ./deposit.sh install $?
   clear
+  echo "Please enter your withdrawl address"
+  local eth1_address
+  read -p -r "${cyan}####### Enter eth1 address:${white} " eth1_address
   if [ "$network" = "mainnet" ]; then
-     sudo ./deposit.sh new-mnemonic --chain mainnet --num_validators=1 --mnemonic_language=english
+     sudo ./deposit.sh new-mnemonic --chain mainnet --num_validators=1 --mnemonic_language=english --eth1_withdrawal_address $eth1_address
   else
-     sudo ./deposit.sh new-mnemonic --chain prater --num_validators=1 --mnemonic_language=english
+     sudo ./deposit.sh new-mnemonic --chain prater --num_validators=1 --mnemonic_language=english --eth1_withdrawal_address $eth1_address
   fi
   echo "Please save your mnemonic phrase in a safe place"
   echo "You will need a metamask wallet for the next steps: https://metamask.io/"
