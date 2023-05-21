@@ -3,6 +3,8 @@
 ![image info](./logo.png)
 Thanks to [u/monochromebow](https://www.reddit.com/user/monochromebow) for the logo.
 ## WARNING: THIS IS ALPHA SOFTWARE!
+Todo: add withrdrawl adress setup, change snapshot url according to chosen network
+
 Testnet and Mainnet supported
 
 Ubuntu 22.04 LTS supported
